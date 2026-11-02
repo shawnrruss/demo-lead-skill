@@ -7,14 +7,14 @@ from .export import write_csv
 from .overpass import build_query, fetch_places, parse_elements
 
 
-def positive_limit(value):
+def positive_limit(value: str) -> int:
     number = int(value)
     if number < 1:
         raise argparse.ArgumentTypeError("limit must be a positive integer")
     return number
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--city", required=True)
     parser.add_argument("--type", required=True)

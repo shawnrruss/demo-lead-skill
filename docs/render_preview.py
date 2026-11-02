@@ -8,13 +8,11 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-def main():
+def main() -> None:
     output = Path("out/preview.csv")
-    subprocess.run(
-        [sys.executable, "-m", "leadlist", "--city", "X", "--type", "bakery",
-         "--offline", "tests/fixtures/overpass_sample.json", "--out", str(output)],
-        check=True,
-    )
+    command = [sys.executable, "-m", "leadlist", "--city", "X", "--type", "bakery",
+               "--offline", "tests/fixtures/overpass_sample.json", "--out", str(output)]
+    subprocess.run(command, check=True)
     with output.open(encoding="utf-8", newline="") as stream:
         header, *rows = list(csv.reader(stream))
 

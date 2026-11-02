@@ -1,10 +1,11 @@
+"""Write business rows as a spreadsheet-ready CSV file."""
 import csv
 from pathlib import Path
 
 HEADER = ["name", "category", "street address", "postcode", "city", "website", "osm_url"]
 
 
-def write_csv(path, rows):
+def write_csv(path: str | Path, rows: list[list[str]]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as stream:
