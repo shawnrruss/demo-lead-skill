@@ -45,6 +45,7 @@ class BusinessListTests(unittest.TestCase):
 
     def test_query_escapes_city(self):
         import json
+
         from leadlist.overpass import build_query
         city = 'X"\nY\\Z'
         self.assertIn(f'["name"={json.dumps(city)}]', build_query(city, "bakery"))
@@ -72,6 +73,7 @@ class BusinessListTests(unittest.TestCase):
 
     def test_client_sends_one_polite_request(self):
         from unittest.mock import Mock, patch
+
         from leadlist.overpass import ENDPOINT, fetch_places
         response = Mock(status_code=200)
         response.json.return_value = self.payload
@@ -85,6 +87,7 @@ class BusinessListTests(unittest.TestCase):
 
     def test_http_errors_and_redirects_are_clear(self):
         from unittest.mock import Mock, patch
+
         from leadlist.overpass import fetch_places
         for status in (302, 429, 500):
             with self.subTest(status=status):
@@ -94,8 +97,10 @@ class BusinessListTests(unittest.TestCase):
                     post.assert_called_once()
 
     def test_timeout_is_clear(self):
-        import requests
         from unittest.mock import patch
+
+        import requests
+
         from leadlist.overpass import fetch_places
         with patch("leadlist.overpass.requests.post", side_effect=requests.Timeout("timed out")):
             with self.assertRaisesRegex(ValueError, "Overpass request failed: timed out"):
@@ -103,6 +108,7 @@ class BusinessListTests(unittest.TestCase):
 
     def test_service_errors_and_invalid_responses_are_rejected(self):
         from unittest.mock import Mock, patch
+
         from leadlist.overpass import fetch_places
         for payload, message in (({}, "expected an elements list"),
                                  ({"elements": [], "remark": "query timed out"}, "query timed out")):
@@ -114,6 +120,7 @@ class BusinessListTests(unittest.TestCase):
 
     def test_live_cli_limits_sorted_rows(self):
         from unittest.mock import patch
+
         from leadlist.__main__ import main
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "live.csv"
@@ -131,6 +138,7 @@ class BusinessListTests(unittest.TestCase):
         from contextlib import redirect_stderr
         from io import StringIO
         from unittest.mock import patch
+
         from leadlist.__main__ import main
         for extra, message in ((["--type", "unknown"], "Known types:"),
                                (["--limit", "0"], "limit must be a positive integer"),

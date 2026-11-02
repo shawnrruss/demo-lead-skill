@@ -1,7 +1,6 @@
 import csv
 from pathlib import Path
 
-
 HEADER = ["name", "category", "street address", "postcode", "city", "website", "osm_url"]
 
 

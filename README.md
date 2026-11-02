@@ -1,30 +1,70 @@
 # Business list demo
 
+Turn public OpenStreetMap businesses into a sorted, deduplicated CSV with a Python CLI and a Claude Agent Skill.
+
+[![CI](https://github.com/shawnrruss/demo-lead-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/shawnrruss/demo-lead-skill/actions/workflows/ci.yml)
+
+![Four fictional bakeries exported by the CLI, rendered directly from its CSV](docs/preview.png)
+
 Original demo, public data only, not client work. AI-assisted implementation and documentation.
 
-A small Claude Agent Skill and Python 3.12+ helper export named OpenStreetMap businesses to CSV, ready to open in a spreadsheet. Supported types: bakery, cafe, dentist, hairdresser, bicycle shop, restaurant, florist. The JSON mapping is in `leadlist/tags.json`.
+## What it shows
 
-## Install and run
+- A reusable agent skill backed by a standalone Python CLI.
+- Explicit business-tag mappings and escaped Overpass queries.
+- One bounded HTTP request with clear service errors and no hidden retries.
+- Stable sorting, case-insensitive deduplication, and spreadsheet-ready CSV output.
+- 13 offline tests covering export, validation, HTTP failures, and the skill contract.
+
+Supported types: bakery, cafe, dentist, hairdresser, bicycle shop, restaurant, florist. The JSON mapping is in `leadlist/tags.json`.
+
+## Quick start
 
 From this repository with Python 3.12+:
 
 ```sh
-python -m pip install -e .
+python -m venv .venv
+# Activate: source .venv/bin/activate (Windows PowerShell: .venv/Scripts/Activate.ps1)
+python -m pip install -r requirements.lock
+python -m pip install --no-deps --no-build-isolation -e .
 python -m leadlist --city "Tampere" --type bakery --out out/bakeries.csv --limit 50
 ```
 
 The default limit is 50 sorted, deduplicated rows; use a positive integer to change it. Quote multiword types, for example `--type "bicycle shop"`.
 
-## Offline demonstration and tests
+## Offline demonstration
 
 The fixture contains six made-up elements, including a duplicate and an unnamed place. This command writes four business rows and a header without network access:
 
 ```sh
 python -m leadlist --city X --type bakery --offline tests/fixtures/overpass_sample.json --out out/t.csv
-python -m unittest tests.test_offline
 ```
 
-Tests mock HTTP calls; no live API access is needed.
+## Tests and quality checks
+
+```sh
+python -m unittest tests.test_offline
+python -m ruff check .
+python -m build --no-isolation
+python docs/render_preview.py
+test -f docs/preview.png -o -f docs/preview.gif
+```
+
+Tests mock HTTP calls; no live API access is needed. CI runs the same checks on Python 3.12 with locked dependencies. No separate typecheck command is configured.
+
+The preview command runs the CLI against the made-up fixture, then uses Pillow to render the resulting CSV to `docs/preview.png`. It needs no browser, network, or external fonts.
+
+## Project layout
+
+| Path | Purpose |
+| --- | --- |
+| `leadlist/` | CLI, query client, tag mapping, and CSV exporter |
+| `skills/business-list/` | Claude Agent Skill instructions |
+| `tests/test_offline.py` | Offline regression tests |
+| `tests/fixtures/` | Six made-up Overpass elements |
+| `docs/render_preview.py` | Reproducible CSV preview renderer |
+| `requirements.lock` | Pinned runtime, lint, build, and preview dependencies |
+| `.github/workflows/ci.yml` | Tests, lint, build, and preview checks |
 
 ## Install the Claude skill
 
