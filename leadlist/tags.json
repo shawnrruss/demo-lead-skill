@@ -1,0 +1,9 @@
+{
+  "bakery": ["shop", "bakery"],
+  "cafe": ["amenity", "cafe"],
+  "dentist": ["amenity", "dentist"],
+  "hairdresser": ["shop", "hairdresser"],
+  "bicycle shop": ["shop", "bicycle"],
+  "restaurant": ["amenity", "restaurant"],
+  "florist": ["shop", "florist"]
+}

@@ -1,0 +1,10 @@
+{
+  "elements": [
+    {"type": "node", "id": 6, "tags": {"name": "Dawn Bakery", "shop": "bakery"}},
+    {"type": "node", "id": 1, "tags": {"name": "Amber Bakery", "shop": "bakery", "addr:street": "Main Street", "addr:housenumber": "1", "addr:postcode": "12345", "addr:city": "X"}},
+    {"type": "way", "id": 2, "tags": {"name": "Amber Bakery", "shop": "bakery", "addr:street": "Main Street", "addr:housenumber": "1", "addr:postcode": "12345", "addr:city": "X"}},
+    {"type": "node", "id": 3, "tags": {"shop": "bakery"}},
+    {"type": "way", "id": 4, "tags": {"name": "Birch Bakery", "shop": "bakery", "addr:street": "Oak Street", "addr:housenumber": "2", "website": "https://birch.example"}},
+    {"type": "node", "id": 5, "tags": {"name": "Cedar Bakery", "shop": "bakery"}}
+  ]
+}

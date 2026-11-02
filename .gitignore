@@ -4,3 +4,4 @@ __pycache__/
 out/
 *.log
 .env
+*.egg-info/
