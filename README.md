@@ -1,6 +1,6 @@
 # Business list demo
 
-Turn public OpenStreetMap businesses into a sorted, deduplicated CSV with a Python CLI and a Claude Agent Skill.
+Turn public OpenStreetMap business records into a consistent, sorted and deduplicated CSV export. Run the Python CLI directly or use the included Claude Agent Skill.
 
 [![CI](https://github.com/shawnrruss/demo-lead-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/shawnrruss/demo-lead-skill/actions/workflows/ci.yml)
 
@@ -27,10 +27,7 @@ python -m venv .venv
 # Activate: source .venv/bin/activate (Windows PowerShell: .venv/Scripts/Activate.ps1)
 python -m pip install -r requirements.lock
 python -m pip install --no-deps --no-build-isolation -e .
-python -m leadlist --city "Tampere" --type bakery --out out/bakeries.csv --limit 50
 ```
-
-The default limit is 50 sorted, deduplicated rows; use a positive integer to change it. Quote multiword types, for example `--type "bicycle shop"`.
 
 ## Offline demonstration
 
@@ -39,6 +36,16 @@ The fixture contains six made-up elements, including a duplicate and an unnamed 
 ```sh
 python -m leadlist --city X --type bakery --offline tests/fixtures/overpass_sample.json --out out/t.csv
 ```
+
+## Live public-data example
+
+After trying the offline fixture, query OpenStreetMap through Overpass:
+
+```sh
+python -m leadlist --city "Tampere" --type bakery --out out/bakeries.csv --limit 50
+```
+
+The default limit is 50 sorted, deduplicated rows; use a positive integer to change it. Quote multiword types, for example `--type "bicycle shop"`. Read the data limitations below before using live results.
 
 ## Tests and quality checks
 
