@@ -50,7 +50,7 @@ python docs/render_preview.py
 test -f docs/preview.png -o -f docs/preview.gif
 ```
 
-Tests mock HTTP calls; no live API access is needed. CI runs the same checks on Python 3.12 with locked dependencies. No separate typecheck command is configured.
+Tests mock HTTP calls; no live API access is needed. CI installs locked dependencies and runs tests, lint, and builds on Python 3.12. Run the preview checks locally. No separate typecheck command is configured.
 
 The preview command runs the CLI against the made-up fixture, then uses Pillow to render the resulting CSV to `docs/preview.png`. It needs no browser, network, or external fonts.
 
@@ -64,7 +64,7 @@ The preview command runs the CLI against the made-up fixture, then uses Pillow t
 | `tests/fixtures/` | Six made-up Overpass elements |
 | `docs/render_preview.py` | Reproducible CSV preview renderer |
 | `requirements.lock` | Pinned runtime, lint, build, and preview dependencies |
-| `.github/workflows/ci.yml` | Tests, lint, build, and preview checks |
+| `.github/workflows/ci.yml` | Dependency installation, tests, lint, and build |
 
 ## Install the Claude skill
 

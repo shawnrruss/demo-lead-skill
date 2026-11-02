@@ -10,11 +10,10 @@ from PIL import Image, ImageDraw, ImageFont
 
 def main() -> None:
     output = Path("out/preview.csv")
-    command = [sys.executable, "-m", "leadlist", "--city", "X", "--type", "bakery",
-               "--offline", "tests/fixtures/overpass_sample.json", "--out", str(output)]
-    subprocess.run(command, check=True)
+    subprocess.run([sys.executable, "-m", "leadlist", "--city", "X", "--type", "bakery",
+                    "--offline", "tests/fixtures/overpass_sample.json", "--out", str(output)], check=True)
     with output.open(encoding="utf-8", newline="") as stream:
-        header, *rows = list(csv.reader(stream))
+        header, *rows = csv.reader(stream)
 
     image = Image.new("RGB", (1800, 740), "#f3f5f8")
     draw = ImageDraw.Draw(image)
